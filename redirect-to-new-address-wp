@@ -2,9 +2,13 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
-RewriteCond %{HTTP_HOST} !^(www\.)?newdoamin\.com$
+
+# Redirect all traffic except for the new domain and specific file
+RewriteCond %{HTTP_HOST} !^(www\.)?newdomain\.com$
 RewriteCond $1 !^(excludefile\.html)
 RewriteRule (.*) http://www.newdomain.com/$1 [L,R=301]
+
+# WordPress-specific rules (to handle the site)
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
